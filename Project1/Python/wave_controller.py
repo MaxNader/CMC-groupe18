@@ -22,15 +22,22 @@ class WaveController:
         # state array for recording all the variables
         self.state = np.zeros((pars.n_iterations, 2*self.n_joints))
        
-
-        pylog.warning(
-            "Implement below the step function following the instructions here and in the report")
-
         # indexes of the left muscle activations (optional)
         self.muscle_l = 2*np.arange(15)
         # indexes of the right muscle activations (optional)
         self.muscle_r = self.muscle_l+1
         self.metrics = metrics.compute_controller(self)
+
+    def S_sqrt(self, x):
+        return np.sqrt(np.maximum(x,0))
+
+    def S_max(self, x):
+        return np.maximum(x,0)
+
+    def S_sigmoid(self, x):
+        lam = 50
+        theta = 0.5
+        return 1/(1+np.exp(-lam*(x-theta)))
 
     def step(self, iteration, time, timestep, pos=None):
         """
@@ -49,19 +56,13 @@ class WaveController:
         In addition to returning the activation functions, store
         them in self.state for later use offline
         """
-        f = 3
-        A = 0.125*f
-        epsilon = (1/self.n_joints)*f
 
 
         array = np.zeros(2*self.n_joints)
-        #print('debug selffstate: ', self.metrics)
-        #array[self.muscle_l] = 0.5 + 0.5*self.metrics['amp']*np.sin(2*np.pi*(self.metrics['frequency']*time - self.metrics['wavefrequency']*self.muscle_l/self.n_joints))
-        #array[self.muscle_r] = 0.5 - 0.5*self.metrics['amp']*np.sin(2*np.pi*(self.metrics['frequency']*time - self.metrics['wavefrequency']*self.muscle_r/self.n_joints))
-        #array[self.muscle_l] = 0.5 + self.muscle_l/self.n_joints*np.sin(2*np.pi*(1*time - 0.2*self.muscle_l/self.n_joints))
-        #array[self.muscle_r] = 0.5 - self.muscle_r/self.n_joints*np.sin(2*np.pi*(1*time - 0.2*self.muscle_r/self.n_joints))
-        array[self.muscle_l] = 0.5 + 0.5*A*np.sin(2*np.pi*(f*time - epsilon*self.muscle_l/self.n_joints))
-        array[self.muscle_r] = 0.5 - 0.5*A*np.sin(2*np.pi*(f*time - epsilon*self.muscle_r/self.n_joints))
+        array[self.muscle_r] = 0.5 - (self.pars.amp/2)*np.sin(2*np.pi*(self.pars.freq*time - self.pars.wavefrequency*((self.muscle_r-1)/(2*self.n_joints))))
+        array[self.muscle_l] = 0.5 + (self.pars.amp/2)*np.sin(2*np.pi*(self.pars.freq*time - self.pars.wavefrequency*(self.muscle_l/(2*self.n_joints))))
         self.state[iteration,:] = array
-        #print('array: ', array)
         return array
+    
+    
+    
