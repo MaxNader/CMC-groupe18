@@ -34,10 +34,10 @@ class WaveController:
     def S_max(self, x):
         return np.maximum(x,0)
 
-    def S_sigmoid(self, x):
-        lam = 50
-        theta = 0.5
+    def S_sigmoid(self, x,lam,theta):
         return 1/(1+np.exp(-lam*(x-theta)))
+    
+
 
     def step(self, iteration, time, timestep, pos=None):
         """
@@ -57,11 +57,12 @@ class WaveController:
         them in self.state for later use offline
         """
 
+        if self.pars.activation_func[0]:
 
-        array = np.zeros(2*self.n_joints)
-        array[self.muscle_r] = 0.5 - (self.pars.amp/2)*np.sin(2*np.pi*(self.pars.freq*time - self.pars.wavefrequency*((self.muscle_r-1)/(2*self.n_joints))))
-        array[self.muscle_l] = 0.5 + (self.pars.amp/2)*np.sin(2*np.pi*(self.pars.freq*time - self.pars.wavefrequency*(self.muscle_l/(2*self.n_joints))))
-        self.state[iteration,:] = array
+            array = np.zeros(2*self.n_joints)
+            array[self.muscle_r] = self.S_sigmoid(0.5 - (self.pars.amp/2)*np.sin(2*np.pi*(self.pars.freq*time - self.pars.wavefrequency*((self.muscle_r-1)/(2*self.n_joints)))), self.pars.activation_func[1],self.pars.activation_func[2])
+            array[self.muscle_l] = self.S_sigmoid(0.5 + (self.pars.amp/2)*np.sin(2*np.pi*(self.pars.freq*time - self.pars.wavefrequency*(self.muscle_l/(2*self.n_joints)))), self.pars.activation_func[1],self.pars.activation_func[2])
+            self.state[iteration,:] = array
         return array
     
     

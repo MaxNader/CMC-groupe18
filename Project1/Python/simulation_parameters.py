@@ -55,6 +55,8 @@ class SimulationParameters:
         self.freq = 0
         self.wavefrequency = 0
 
+        self.activation_func = [False,50,0.5]
+
         # NOTE: This overrides the previous declarations
         self.__dict__.update(kwargs)
 

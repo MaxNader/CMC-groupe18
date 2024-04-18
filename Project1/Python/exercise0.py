@@ -22,7 +22,8 @@ def exercise_single(**kwargs):
         return_network=True,
         amp = 1.2/2,
         freq = 5,
-        wavefrequency = 0.6,
+        wavefrequency = 0.665,
+        activation_func = [True,50,0.5],
         **kwargs
     )
 
