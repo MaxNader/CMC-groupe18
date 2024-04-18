@@ -31,7 +31,8 @@ def exercise_multiple():
                 wavefrequency=wavefrequency,
                 headless=True,
                 print_metrics=False,
-                return_network=True
+                return_network=True,
+                activation_func = [True,50,0.5]
             )
             for i, amp in enumerate(np.linspace(0.8, 1, nsim))
             for j, wavefrequency in enumerate(np.linspace(0.6, 0.8, nsim))
