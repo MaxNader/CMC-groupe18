@@ -58,12 +58,18 @@ class WaveController:
         """
 
         if self.pars.activation_func[0]:
-
             array = np.zeros(2*self.n_joints)
             array[self.muscle_r] = self.S_sigmoid(0.5 - (self.pars.amp/2)*np.sin(2*np.pi*(self.pars.freq*time - self.pars.wavefrequency*((self.muscle_r-1)/(2*self.n_joints)))), self.pars.activation_func[1],self.pars.activation_func[2])
             array[self.muscle_l] = self.S_sigmoid(0.5 + (self.pars.amp/2)*np.sin(2*np.pi*(self.pars.freq*time - self.pars.wavefrequency*(self.muscle_l/(2*self.n_joints)))), self.pars.activation_func[1],self.pars.activation_func[2])
             self.state[iteration,:] = array
-        return array
+            return array
+        else: 
+            array = np.zeros(2*self.n_joints)
+            array[self.muscle_r] = 0.5 - (self.pars.amp/2)*np.sin(2*np.pi*(self.pars.freq*time - self.pars.wavefrequency*((self.muscle_r-1)/(2*self.n_joints))))
+            array[self.muscle_l] = 0.5 + (self.pars.amp/2)*np.sin(2*np.pi*(self.pars.freq*time - self.pars.wavefrequency*(self.muscle_l/(2*self.n_joints))))
+            self.state[iteration,:] = array
+            return array
+
     
     
     
