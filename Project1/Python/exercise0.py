@@ -20,10 +20,11 @@ def exercise_single(**kwargs):
         log_path=log_path,
         compute_metrics=3,
         return_network=True,
-        amp = 1.2/2,
+        amp = 0.6/2,
         freq = 5,
         wavefrequency = 0.665,
-        activation_func = [True,50,0.5],
+        activation_func = [False,25,0.5],
+        video_record = True,
         **kwargs
     )
 
