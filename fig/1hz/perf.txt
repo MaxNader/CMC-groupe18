@@ -1,0 +1,26 @@
+amp = 1/2,
+        freq = 1,
+        wavefrequency = 1.75,
+
+The computed metrics are 
+        frequency
+                0.0
+        ipls
+                0.0
+        wavefrequency
+                0.0
+        ptcc
+                0.0
+        amp
+                1.0
+        fspeed_PCA
+                0.008045652380968943
+        lspeed_PCA
+                3.6170519539247535e-05
+        fspeed_cycle
+                0.0
+        lspeed_cycle
+                0.0
+        torque
+                0.0036129129686663488
+
