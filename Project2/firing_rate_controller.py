@@ -169,8 +169,8 @@ class FiringRateController:
         array = np.zeros(2 * self.n_muscle_cells)
 
         for i in range(self.n_muscle_cells):
-            array[2*i] = self.state[iteration+1, self.muscle_l[i]]
-            array[2*i+1] = self.state[iteration+1, self.muscle_r[i]]
+            array[2*i] = self.state[iteration, self.muscle_l[i]]
+            array[2*i+1] = self.state[iteration, self.muscle_r[i]]
         return array    # here you have to final active muscle equations for the 10 joints
     
     def S(self, x):
