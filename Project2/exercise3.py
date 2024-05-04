@@ -13,8 +13,6 @@ def exercise3():
     log_path = './logs/exercise3/'
     os.makedirs(log_path, exist_ok=True)
 
-    pylog.info("Running the simulation")
-
     #default parameters
     all_pars = SimulationParameters(
         n_iterations=3001,
@@ -22,6 +20,7 @@ def exercise3():
         log_path=log_path,
         compute_metrics=3,
         return_network=True,
+        video_record = True,
     )
 
     pylog.info("Running the simulation")
@@ -35,6 +34,7 @@ def exercise3():
     right_idx = controller.muscle_r
 
     # example plot using plot_left_right
+    plt.figure('muscle_activities_single')
     plot_left_right(
         controller.times,
         controller.state,
@@ -43,23 +43,8 @@ def exercise3():
         cm="green",
         offset=0.1)
 
-    # example plot using plot_trajectory
-    plt.figure("trajectory")
-    plot_trajectory(controller)
-
-    # example plot using plot_time_histories_multiple_windows
-    plt.figure("joint positions")
-    plot_time_histories_multiple_windows(
-        controller.times,
-        controller.joints_positions,
-        offset=-0.4,
-        colors="green",
-        ylabel="joint positions",
-        lw=1
-    )
-
     # example plot using plot_time_histories
-    plt.figure("link y-velocities")
+    plt.figure("link y-velocities_single")
     plot_time_histories(
         controller.times,
         controller.links_velocities[:, :, 1],
@@ -68,10 +53,11 @@ def exercise3():
         ylabel="link y-velocities",
         lw=1
     )
-
+    
 
 
 if __name__ == '__main__':
     exercise3()
+    plt.show()
 
 

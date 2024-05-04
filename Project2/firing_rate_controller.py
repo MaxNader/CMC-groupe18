@@ -36,9 +36,9 @@ class FiringRateController:
         # vector of indexes for the CPG activity variables - modify this
         # according to your implementation
 
-        self.all_v = range(self.n_neurons*2)
+        
 
-        self.L_v= range(self.n_neurons)
+        self.L_v= np.arange(self.n_neurons)
         self.R_v= self.n_neurons + np.arange(self.n_neurons)
         self.all_a= 2*self.n_neurons + np.arange(0, self.n_neurons*2)
         self.L_a= 2*self.n_neurons + np.arange(0, self.n_neurons)
@@ -166,9 +166,12 @@ class FiringRateController:
         even indexes (0,2,4,...) = left muscle activations
         odd indexes (1,3,5,...) = right muscle activations
         """
-        return np.zeros(
-            2 *
-            self.n_muscle_cells)  # here you have to final active muscle equations for the 10 joints
+        array = np.zeros(2 * self.n_muscle_cells)
+
+        for i in range(self.n_muscle_cells):
+            array[2*i] = self.state[iteration+1, self.muscle_l[i]]
+            array[2*i+1] = self.state[iteration+1, self.muscle_r[i]]
+        return array    # here you have to final active muscle equations for the 10 joints
     
     def S(self, x):
         return np.sqrt(np.maximum(x,0))
