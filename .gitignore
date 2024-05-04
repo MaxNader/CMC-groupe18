@@ -159,3 +159,12 @@ cython_debug/
 /Project1/Python/util
 /Project1/Python/logs
 /Project1/Report
+
+/Project2/farms_amphibious
+/Project2/farms_core
+/Project2/farms_mujoco
+/Project2/farms_sim
+/Project2/models
+/Project2/muscle_parameters
+/Project2/util
+/Project2/logs

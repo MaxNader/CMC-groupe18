@@ -4,7 +4,7 @@ import numpy as np
 from scipy.interpolate import CubicSpline
 import scipy.stats as ss
 import farms_pylog as pylog
-
+import metrics
 
 class FiringRateController:
     """zebrafish controller"""
@@ -35,7 +35,9 @@ class FiringRateController:
             np.arange(0, 2*self.n_muscle_cells)  # all muscle cells indexes
         # vector of indexes for the CPG activity variables - modify this
         # according to your implementation
+
         self.all_v = range(self.n_neurons*2)
+
         self.L_v= range(self.n_neurons)
         self.R_v= self.n_neurons + np.arange(self.n_neurons)
         self.all_a= 2*self.n_neurons + np.arange(0, self.n_neurons*2)
@@ -45,8 +47,6 @@ class FiringRateController:
         self.L_s=self.n_neurons*4 + self.n_muscle_cells*2 + np.arange(0, self.n_neurons)
         self.R_s=self.n_neurons*4 + self.n_muscle_cells*2 + self.n_neurons + np.arange(0, self.n_neurons)
 
-        pylog.warning(
-            "Implement here the vectorization indexed for the equation variables")
 
         self.state = np.zeros([self.n_iterations, self.n_eq])  # equation state
         self.dstate = np.zeros([self.n_eq])  # derivative state
@@ -83,6 +83,9 @@ class FiringRateController:
         self.zeros8 = np.zeros(8)
         # pre-computed zero activity for the tail joint
         self.zeros2 = np.zeros(2)
+
+        #adding metrics
+        self.metrics = metrics.compute_controller(self)
 
     def get_ou_noise_process_dw(self, timestep, x_prev, sigma):
         """
