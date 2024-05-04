@@ -16,12 +16,13 @@ def exercise4():
 
     log_path = './logs/exercise4/'
     os.makedirs(log_path, exist_ok=True)
-    n_simulations = 5
-    I_sim = 10
-    n_sim = 10
-    I_range = np.arange(0, 30, I_sim)
-    n_range = np.arange(0, 10, n_sim)
+
+    I_sim = 11
+    n_sim = 11
+    I_range = np.linspace(0, 30, I_sim)
+    n_range = np.linspace(0, 10, n_sim)
     tot_sim = I_sim*n_sim
+
     ptccs = np.zeros([tot_sim, 3])
     freqs = np.zeros([tot_sim, 3])
     wavefreqs = np.zeros([tot_sim, 3])
@@ -29,7 +30,7 @@ def exercise4():
     pars_list  = [SimulationParameters(
         n_iterations=3001,
         log_path=log_path,
-        simulation_i=i*n_simulations+j,
+        simulation_i=i*n_sim+j,
         compute_metrics=3,
         I=I,
         n_desc = n,
@@ -42,7 +43,7 @@ def exercise4():
         pars_list,num_process=8
     )
     
-    for i,num in enumerate([i*n_simulations+j for i in range(len(np.arange(0,10,2))) for j in range(len(I_range))]):
+    for i,num in enumerate([i*n_sim+j for i in range(n_sim) for j in range(I_sim)]):
         # load controller
         controller = load_object(log_path+"controller"+str(num))
         ptccs[i] = [
