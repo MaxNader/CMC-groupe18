@@ -117,9 +117,9 @@ class FiringRateController:
         # Populate the matrix according to the given rules
         for i in range(n):
             for j in range(n):
-                if i <= j and (j - i) <= n_desc:
+                if i <= j and (j - i) <= n_asc:
                     W[i, j] = 1 / (j - i + 1)
-                elif i > j and (i - j) <= n_asc:
+                elif i > j and (i - j) <= n_desc:
                     W[i, j] = 1 / (i - j + 1)
         return W
     def W_mc(self):
