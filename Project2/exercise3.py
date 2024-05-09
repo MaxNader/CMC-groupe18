@@ -40,10 +40,28 @@ def exercise3(**kwargs):
         right_idx,
         cm="green",
         offset=0.1)
+    
+    # CPG firing rates
+    plt.figure('CPG_firing_rates_single')
+    plot_left_right(
+        controller.times,
+        controller.state,
+        controller.L_v,
+        controller.R_v,
+        cm="green",
+        offset=0.1)
+    
+    # CPG adaptations
+    plt.figure('CPG_adaptations_single')
+    plot_left_right(
+        controller.times,
+        controller.state,
+        controller.L_a,
+        controller.R_a,
+        cm="green",
+        offset=0.1)
 
-    # example plot using plot_trajectory
-    plt.figure("trajectory_single")
-    plot_trajectory(controller)
+
 
     # example plot using plot_time_histories_multiple_windows
     plt.figure("joint positions_single")
@@ -53,17 +71,6 @@ def exercise3(**kwargs):
         offset=-0.4,
         colors="green",
         ylabel="joint positions",
-        lw=1
-    )
-
-    # example plot using plot_time_histories
-    plt.figure("link y-velocities_single")
-    plot_time_histories(
-        controller.times,
-        controller.links_velocities[:, :, 1],
-        offset=-0.,
-        colors="green",
-        ylabel="link y-velocities",
         lw=1
     )
 
