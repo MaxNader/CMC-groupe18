@@ -36,7 +36,8 @@ def exercise4():
         n_desc = n,
         video_record=False,
         headless=True,
-        print_metrics=False
+        print_metrics=False,
+        stretch = False,
     ) for i,n in enumerate(n_range) for j,I in enumerate(I_range)]
         
     run_multiple(

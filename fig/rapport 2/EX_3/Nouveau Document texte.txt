@@ -1,0 +1,23 @@
+The computed metrics are 
+        frequency
+                3.447586344800004
+        ipls
+                0.1969143750000013
+        wavefrequency
+                0.6788793103448317
+        ptcc
+                1.8543936168661053
+        amp
+                1.8386189486579907
+        fspeed_PCA
+                0.011265463658585986
+        lspeed_PCA
+                0.002692333858584338
+        fspeed_cycle
+                0.010318146319365038
+        lspeed_cycle
+                1.7938682697980555e-05
+        torque
+                0.018354794622380564
+        curvature
+                0.5341454506155298

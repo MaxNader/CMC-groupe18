@@ -15,14 +15,14 @@ from metrics import compute_curvature
 def exercise5():
 
     pylog.info("Ex 5")
-    pylog.info("Implement exercise 5")
+    
     log_path = './logs/exercise5/'
     os.makedirs(log_path, exist_ok=True)
 
     nsim=1
        
 
-    Idiff_list= [0,1,2,3,4]
+    Idiff_list= np.linspace(0, 4, 12)
     pars_list = [
         SimulationParameters(
             simulation_i=nsim,
@@ -32,6 +32,7 @@ def exercise5():
             compute_metrics=3,
             Idiff=Id,
             return_network=True,
+            stretch = False,
     )
     for i, Id in enumerate(Idiff_list)]
     networks = run_multiple(pars_list, num_process=6)
@@ -42,14 +43,22 @@ def exercise5():
         curvature=curvatures_list[i]
         print(f"Idiff = {Idiff_list[i]}")
         print(f"Curvature: {curvature}\n")
-
+    
         # Plot trajectory for each Idiff
-        plt.subplot(3, 2, i + 1)
+        plt.subplot(6,2, i + 1)
         plot_trajectory(network)
         plt.title(f"Trajectory for Idiff = {Idiff_list[i]}")
-
-
     
+    plt.figure('Curvature')
+    plt.plot(Idiff_list, curvatures_list)
+    plt.xlabel('Idiff')
+    plt.ylabel('Curvature')
+
+    plt.figure('Lat Speed')
+    plt.plot(Idiff_list, lat_speed_list)
+    plt.xlabel('Idiff')
+    plt.ylabel('Lat Speed')
+
 
         
 

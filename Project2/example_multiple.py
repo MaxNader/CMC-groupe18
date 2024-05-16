@@ -23,6 +23,7 @@ def exercise_multiple():
             video_record=False,
             compute_metrics=2,
             I=I,
+            
             b=b,
             headless=True,
             print_metrics=False

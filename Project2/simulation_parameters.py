@@ -76,7 +76,7 @@ class SimulationParameters:
         self.n_asc_str = 10  # number of ascending stretch connections
         self.n_desc_str = 0  # number of descending stretch connections
         self.tau_str = 0.005  # stretch time scale
-
+        self.stretch = True
         # noise pars
         self.noise_sigma = 0  # sigma of the OU noise process
 

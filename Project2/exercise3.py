@@ -18,6 +18,7 @@ def exercise3(**kwargs):
         log_path=log_path,
         compute_metrics=3,
         return_network=True,
+        stretch=False,
         **kwargs
     )
 

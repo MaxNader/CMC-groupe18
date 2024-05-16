@@ -70,7 +70,10 @@ class FiringRateController:
             self.poses[0], self.poses[-1], self.n_neurons)  # position of the sensors
 
         # initialize ode solver
-        self.f = self.ode_rhs
+        if self.pars.stretch:
+            self.f = self.ode_rhs
+        else:
+            self.f = self.ode_rhs_bis
 
         # stepper function selection
         if self.pars.method == "euler":
@@ -201,13 +204,13 @@ class FiringRateController:
         """
         
 
-        self.dstate[self.L_v] = (-state[self.L_v] + self.S(self.pars.I-self.pars.b*state[self.L_a]
+        self.dstate[self.L_v] = (-state[self.L_v] + self.S(self.pars.I+self.pars.Idiff-self.pars.b*state[self.L_a]
                                 - self.pars.w_inh*np.dot(self.W_in(self.pars.n_neurons,self.pars.n_desc,self.pars.n_asc),state[self.R_v]) 
                                 - self.pars.w_stretch*np.dot(self.W_in(self.pars.n_neurons,self.pars.n_desc_str,self.pars.n_asc_str),state[self.R_s]))) / self.pars.tau
         
         self.dstate[self.L_a] = (-state[self.L_a]+self.pars.gamma*state[self.L_v])/self.pars.taua
         
-        self.dstate[self.R_v] = (-state[self.R_v] + self.S(self.pars.I-self.pars.b*state[self.R_a] 
+        self.dstate[self.R_v] = (-state[self.R_v] + self.S(self.pars.I-self.pars.Idiff-self.pars.b*state[self.R_a] 
                                 - self.pars.w_inh * np.dot(self.W_in(self.pars.n_neurons,self.pars.n_desc,self.pars.n_asc),state[self.L_v])
                                 - self.pars.w_stretch * np.dot(self.W_in(self.pars.n_neurons,self.pars.n_desc_str,self.pars.n_asc_str),state[self.L_s]))) / self.pars.tau
         
@@ -237,9 +240,9 @@ class FiringRateController:
         """
         
 
-        self.dstate[self.L_v] = (-state[self.L_v] + self.S(self.pars.I-self.pars.b*state[self.L_a]-self.pars.w_inh*np.dot(self.W_in(self.pars.n_neurons,self.pars.n_desc,self.pars.n_asc),state[self.R_v])))/self.pars.tau
+        self.dstate[self.L_v] = (-state[self.L_v] + self.S(self.pars.I +self.pars.Idiff -self.pars.b*state[self.L_a]-self.pars.w_inh*np.dot(self.W_in(self.pars.n_neurons,self.pars.n_desc,self.pars.n_asc),state[self.R_v])))/self.pars.tau
         self.dstate[self.L_a] = (-state[self.L_a]+self.pars.gamma*state[self.L_v])/self.pars.taua
-        self.dstate[self.R_v] = (-state[self.R_v] + self.S(self.pars.I-self.pars.b*state[self.R_a]-self.pars.w_inh*np.dot(self.W_in(self.pars.n_neurons,self.pars.n_desc,self.pars.n_asc),state[self.L_v])))/self.pars.tau
+        self.dstate[self.R_v] = (-state[self.R_v] + self.S(self.pars.I -self.pars.Idiff -self.pars.b*state[self.R_a]-self.pars.w_inh*np.dot(self.W_in(self.pars.n_neurons,self.pars.n_desc,self.pars.n_asc),state[self.L_v])))/self.pars.tau
         self.dstate[self.R_a] = (-state[self.R_a]+self.pars.gamma*state[self.R_v])/self.pars.taua
         self.dstate[self.muscle_l] = self.pars.act_strength*np.dot(self.W_mc(),state[self.L_v])*(1-state[self.muscle_l])/self.pars.taum_a-state[self.muscle_l]/self.pars.taum_d
         self.dstate[self.muscle_r] = self.pars.act_strength*np.dot(self.W_mc(),state[self.R_v])*(1-state[self.muscle_r])/self.pars.taum_a-state[self.muscle_r]/self.pars.taum_d
