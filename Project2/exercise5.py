@@ -6,7 +6,7 @@ import numpy as np
 import farms_pylog as pylog
 import os
 from util.run_closed_loop import run_single
-from simulation_parameters import SimulationParameters
+from plotting_common import plot_2d
 import matplotlib.pyplot as plt
 import os
 from plotting_common import plot_left_right, plot_trajectory, plot_time_histories, plot_time_histories_multiple_windows

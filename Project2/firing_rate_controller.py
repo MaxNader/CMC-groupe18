@@ -111,7 +111,7 @@ class FiringRateController:
             x_new = x_prev-0.1*x_prev*dt+sigma*sqrt(dt)*Wiener
         """
     
-        x_new = np.array([x_previ - 0.1*x_previ*timestep + sigma * np.sqrt(timestep) * np.random.normal() for x_previ in x_prev])
+        x_new = np.array([x_previ - 0.1*x_previ*timestep + sigma * np.sqrt(timestep) * np.random.normal(loc=0.0, scale=np.sqrt(timestep)) for x_previ in x_prev])
         #x_new = np.zero_like(x_prev)
         return x_new
 

@@ -11,7 +11,7 @@ from plotting_common import plot_2d
 def exercise8():
 
     pylog.info("Ex 8")
-    pylog.info("Implement exercise 8")
+
     log_path = './logs/exercise8/'
     os.makedirs(log_path, exist_ok=True)
 
@@ -40,6 +40,7 @@ def exercise8():
         pars_list,num_process=8
     )
     fspeed= np.zeros([tot_sim, 3])
+    ptccs = np.zeros([tot_sim, 3])
     for i,num in enumerate([i*gss_sim+j for i in range(gss_sim) for j in range(gss_sim)]):
         # load controller
         controller = load_object(log_path+"controller"+str(num))
@@ -48,6 +49,11 @@ def exercise8():
             controller.pars.w_stretch,
             np.mean(controller.metrics["fspeed_PCA"])
         ]
+        ptccs[i] = [
+            controller.pars.noise_sigma,
+            controller.pars.w_stretch,
+            np.mean(controller.metrics["ptcc"])
+        ]
 
     plt.figure('fspeed', figsize=[10, 10])
     plot_2d(
@@ -55,7 +61,12 @@ def exercise8():
         ['noise_sigma', 'w_stretch', 'fspeed_PCA'],
         cmap='nipy_spectral'
     )
-
+    plt.figure('oscillation stability', figsize=[10, 10])
+    plot_2d(
+        ptccs,
+        ['noise_sigma', 'w_stretch','PTCC'],
+        cmap='nipy_spectral'
+    )
 
 
 if __name__ == '__main__':
