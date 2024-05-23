@@ -13,13 +13,13 @@ from metrics import compute_curvature
 from util.rw import load_object
 from plotting_common import plot_2d
 
-def exercise7(**kwargs):
+def exercise7():
 
     pylog.info("Ex 7")
-    pylog.info("Implement exercise 7")
+    
     log_path = './logs/exercise7/'
     os.makedirs(log_path, exist_ok=True)
-
+    I = 30
     w_stretch_list= np.linspace(0, 15, 4)
     Idiff_list = np.linspace(0, 4, 4)
     n_sim = 4
@@ -37,9 +37,7 @@ def exercise7(**kwargs):
             print_metrics=False,
             headless=True,
 
-            **kwargs
-
-
+            I=I
     ) for i, gss in enumerate(w_stretch_list) for j, Id in enumerate(Idiff_list)]
     networks = run_multiple(pars_list, num_process=6)
 
@@ -103,8 +101,6 @@ def exercise7(**kwargs):
     
 
 if __name__ == '__main__':
-    for I in np.linspace(0, 30, 4):
-
-        exercise7(I = I)
-        plt.show()
+    exercise7()
+    plt.show()
 
