@@ -5,7 +5,7 @@ from simulation_parameters import SimulationParameters
 import os
 import farms_pylog as pylog
 import matplotlib.pyplot as plt
-from plotting_common import plot_left_right, plot_trajectory, plot_time_histories, plot_time_histories_multiple_windows
+from plotting_common import plot_left_right, plot_trajectory, plot_time_histories, plot_time_histories_multiple_windows, plot_positions
 import numpy as np
 
 
@@ -16,7 +16,7 @@ def exercise6(**kwargs):
     log_path = './logs/exercise6/'
     os.makedirs(log_path, exist_ok=True)
 
-    gss_sim = 10
+    """ gss_sim = 10
   
     gss_range = np.linspace(0, 15, gss_sim)
  
@@ -60,28 +60,29 @@ def exercise6(**kwargs):
     plt.plot(gss_range, fspeeds)
     plt.xlabel('gss')
     plt.ylabel('fspeed')
-
-
+    """
+    gss = 7
     all_pars = SimulationParameters(
-        n_iterations=5001,
+        n_iterations=3001,
         log_path=log_path,
         compute_metrics=3,
         return_network=True,
+        w_stretch=gss,
         **kwargs
     )
-
-    pylog.info("Running the simulation")
+    
+    pylog.info("Running the simulation gss={}".format(gss))
     controller = run_single(
         all_pars
     )
 
-    pylog.info("Plotting the result")
+    pylog.info("Plotting the result gss={}".format(gss))
 
     left_idx = controller.muscle_l
     right_idx = controller.muscle_r
 
     # example plot using plot_left_right
-    plt.figure('muscle_activities_single')
+    plt.figure('muscle_activities_single gss=' + str(gss))
     plot_left_right(
         controller.times,
         controller.state,
@@ -91,7 +92,7 @@ def exercise6(**kwargs):
         offset=0.1)
     
     # CPG firing rates
-    plt.figure('CPG_firing_rates_single')
+    plt.figure('CPG_firing_rates_single gss=' + str(gss))
     plot_left_right(
         controller.times,
         controller.state,
@@ -101,7 +102,7 @@ def exercise6(**kwargs):
         offset=0.1)
     
     # CPG adaptations
-    plt.figure('CPG_adaptations_single')
+    plt.figure('CPG_adaptations_single gss=' + str(gss))
     plot_left_right(
         controller.times,
         controller.state,
@@ -111,7 +112,7 @@ def exercise6(**kwargs):
         offset=0.1)
     
     # Sensory neurons activities
-    plt.figure('SS_activities_single')
+    plt.figure('SS_activities_single gss='+ str(gss))
     plot_left_right(
         controller.times,
         controller.state,
@@ -123,7 +124,7 @@ def exercise6(**kwargs):
 
 
     # example plot using plot_time_histories_multiple_windows
-    plt.figure("joint positions_single")
+    plt.figure("joint positions_single gss=" + str(gss))
     plot_time_histories_multiple_windows(
         controller.times,
         controller.joints_positions,
@@ -132,7 +133,9 @@ def exercise6(**kwargs):
         ylabel="joint positions",
         lw=1
     )
-
+    
+    '''plt.figure("positions gss=" + str(gss))
+    plot_positions(controller.times, controller.links_positions)'''
 
 
 if __name__ == '__main__':
