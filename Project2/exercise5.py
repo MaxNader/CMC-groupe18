@@ -57,53 +57,53 @@ def exercise5():
     left_idx = networks[0].muscle_l
     right_idx = networks[0].muscle_r
         # Plot trajectory for each Idiff
-    plt.figure('Muscle Activities I=0')
+    plt.figure('Muscle Activities I=2')
     plot_left_right(
-        networks[0].times,
-        networks[0].state,
+        networks[2].times,
+        networks[2].state,
         left_idx,
         right_idx,
         cm="green",
         offset=0.1)
-    plt.figure('Muscle Activities I=1')
+    plt.figure('Muscle Activities I=3')
     plot_left_right(
-        networks[1].times,
-        networks[1].state,
+        networks[3].times,
+        networks[3].state,
         left_idx,
         right_idx,
         cm="green",
         offset=0.1)
-    plt.figure('CPG Firing Rates I=0')
+    plt.figure('CPG Firing Rates I=2')
     plot_left_right(
-        networks[0].times,
-        networks[0].state,
-        networks[0].L_v,
-        networks[0].R_v,
+        networks[2].times,
+        networks[2].state,
+        networks[2].L_v,
+        networks[2].R_v,
         cm="green",
         offset=0.1)
-    plt.figure('CPG Firing Rates I=1')
+    plt.figure('CPG Firing Rates I=3')
 
     plot_left_right(
-        networks[1].times,
-        networks[1].state,
-        networks[1].L_v,
-        networks[1].R_v,
+        networks[3].times,
+        networks[3].state,
+        networks[3].L_v,
+        networks[3].R_v,
         cm="green",
         offset=0.1)
-    plt.figure('CPG Adaptations I=0')
+    plt.figure('CPG Adaptations I=2')
     plot_left_right(
-        networks[0].times,
-        networks[0].state,
-        networks[0].L_a,
-        networks[0].R_a,
+        networks[2].times,
+        networks[2].state,
+        networks[2].L_a,
+        networks[2].R_a,
         cm="green",
         offset=0.1)
-    plt.figure('CPG Adaptations I=1')
+    plt.figure('CPG Adaptations I=3')
     plot_left_right(
-        networks[1].times,
-        networks[1].state,
-        networks[1].L_a,
-        networks[1].R_a,
+        networks[3].times,
+        networks[3].state,
+        networks[3].L_a,
+        networks[3].R_a,
         cm="green",
         offset=0.1)
     
