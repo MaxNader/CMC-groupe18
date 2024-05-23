@@ -22,7 +22,7 @@ def exercise5():
     nsim=1
        
 
-    Idiff_list= np.linspace(0, 4, 12)
+    Idiff_list= np.linspace(0, 4, 4)
     pars_list = [
         SimulationParameters(
             simulation_i=nsim,
@@ -38,17 +38,76 @@ def exercise5():
     networks = run_multiple(pars_list, num_process=6)
     curvatures_list = [net.metrics["curvature"] for net in networks]
     lat_speed_list = [net.metrics["lspeed_PCA"] for net in networks]
-
+    plt.figure('Trajectories')
     for i, network in enumerate(networks):
         curvature=curvatures_list[i]
-        print(f"Idiff = {Idiff_list[i]}")
-        print(f"Curvature: {curvature}\n")
-    
+        #print(f"Idiff = {Idiff_list[i]}")
+        #print(f"Curvature: {curvature}\n")
+
         # Plot trajectory for each Idiff
-        plt.subplot(6,2, i + 1)
+        plt.subplot(int(np.ceil(np.sqrt(len(networks)))),int(np.ceil(np.sqrt(len(networks)))), i + 1, aspect='equal', adjustable='box', autoscale_on=True)
         plot_trajectory(network)
-        plt.title(f"Trajectory for Idiff = {Idiff_list[i]}")
+        #plt.title(f"Trajectory for Idiff = {Idiff_list[i]}")
+    plt.figure('Traj2')
+    for i,ind in enumerate([0,1]):
+        plt.subplot(1,2, i + 1)
+        plot_trajectory(networks[ind])
+    plt.figure('Muscle Activities')
     
+    left_idx = networks[0].muscle_l
+    right_idx = networks[0].muscle_r
+        # Plot trajectory for each Idiff
+    plt.figure('Muscle Activities I=0')
+    plot_left_right(
+        networks[0].times,
+        networks[0].state,
+        left_idx,
+        right_idx,
+        cm="green",
+        offset=0.1)
+    plt.figure('Muscle Activities I=1')
+    plot_left_right(
+        networks[1].times,
+        networks[1].state,
+        left_idx,
+        right_idx,
+        cm="green",
+        offset=0.1)
+    plt.figure('CPG Firing Rates I=0')
+    plot_left_right(
+        networks[0].times,
+        networks[0].state,
+        networks[0].L_v,
+        networks[0].R_v,
+        cm="green",
+        offset=0.1)
+    plt.figure('CPG Firing Rates I=1')
+
+    plot_left_right(
+        networks[1].times,
+        networks[1].state,
+        networks[1].L_v,
+        networks[1].R_v,
+        cm="green",
+        offset=0.1)
+    plt.figure('CPG Adaptations I=0')
+    plot_left_right(
+        networks[0].times,
+        networks[0].state,
+        networks[0].L_a,
+        networks[0].R_a,
+        cm="green",
+        offset=0.1)
+    plt.figure('CPG Adaptations I=1')
+    plot_left_right(
+        networks[1].times,
+        networks[1].state,
+        networks[1].L_a,
+        networks[1].R_a,
+        cm="green",
+        offset=0.1)
+    
+
     plt.figure('Curvature')
     plt.plot(Idiff_list, curvatures_list)
     plt.xlabel('Idiff')
@@ -59,7 +118,7 @@ def exercise5():
     plt.xlabel('Idiff')
     plt.ylabel('Lat Speed')
 
-
+    
         
 
 
