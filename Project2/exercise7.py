@@ -13,7 +13,7 @@ from metrics import compute_curvature
 from util.rw import load_object
 from plotting_common import plot_2d
 
-def exercise7():
+def exercise7(**kwargs):
 
     pylog.info("Ex 7")
     pylog.info("Implement exercise 7")
@@ -36,6 +36,10 @@ def exercise7():
             Idiff = Id,
             print_metrics=False,
             headless=True,
+
+            **kwargs
+
+
     ) for i, gss in enumerate(w_stretch_list) for j, Id in enumerate(Idiff_list)]
     networks = run_multiple(pars_list, num_process=6)
 
@@ -71,25 +75,25 @@ def exercise7():
         ]
 
     
-    plt.figure('curvature', figsize=[10, 10])
+    plt.figure('curvature{}'.format(I), figsize=[10, 10])
     plot_2d(
         curvatures,
         ['w_stretch', 'Idiff', 'curvature'],
         cmap='nipy_spectral'
     )
-    plt.figure('lat_speed', figsize=[10, 10])
+    plt.figure('lat_speed{}'.format(I), figsize=[10, 10])
     plot_2d(
         lat_speeds,
         ['w_stretch', 'Idiff', 'lspeed_PCA'],
         cmap='nipy_spectral'
     )
-    plt.figure('fspeed', figsize=[10, 10])
+    plt.figure('fspeed{}'.format(I), figsize=[10, 10])
     plot_2d(
         fspeeds,
         ['w_stretch', 'Idiff', 'fspeed_PCA'],
         cmap='nipy_spectral'
     )
-    plt.figure('oscillation stability', figsize=[10, 10])
+    plt.figure('oscillation stability{}'.format(I), figsize=[10, 10])
     plot_2d(
         ptccs,
         ['w_stretch', 'Idiff', 'PTCC'],
@@ -99,6 +103,8 @@ def exercise7():
     
 
 if __name__ == '__main__':
-    exercise7()
-    plt.show()
+    for I in np.linspace(0, 30, 4):
+
+        exercise7(I = I)
+        plt.show()
 
