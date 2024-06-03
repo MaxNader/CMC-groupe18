@@ -19,9 +19,9 @@ def exercise7():
     
     log_path = './logs/exercise7/'
     os.makedirs(log_path, exist_ok=True)
-    I = 20
+    I = 30
     w_stretch_list= np.linspace(0, 15, 4)
-    Idiff_list = np.linspace(0, 4, 4)
+    Idiff_list = np.linspace(0, 2, 4)
     n_sim = 4
     pars_list = [
         SimulationParameters(
@@ -31,7 +31,6 @@ def exercise7():
             video_record=False,
             compute_metrics=3,
             w_stretch=gss,
-            stretch = False,
             return_network=True,
             Idiff = Id,
             n_desc = 8,
